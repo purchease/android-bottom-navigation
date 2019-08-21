@@ -19,8 +19,7 @@ class BaseFragment : Fragment() {
     private var layoutRes: Int = -1
     private var toolbarId: Int = -1
     private var navHostId: Int = -1
-    private lateinit var appBarConfig: AppBarConfiguration
-
+    private var appBarConfig: AppBarConfiguration? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,13 +47,16 @@ class BaseFragment : Fragment() {
         val navController = requireActivity().findNavController(navHostId)
 
         appBarConfig = AppBarConfiguration(setOf(navController.graph.startDestination))
-        NavigationUI.setupWithNavController(toolbar, navController, appBarConfig)
+        NavigationUI.setupWithNavController(toolbar, navController, appBarConfig!!)
     }
 
     fun onBackPressed(): Boolean {
-        return requireActivity()
+        val navController = requireActivity()
                 .findNavController(navHostId)
-                .navigateUp(appBarConfig)
+        return if (appBarConfig != null)
+            navController.navigateUp(appBarConfig!!)
+        else
+            navController.navigateUp()
     }
 
 
