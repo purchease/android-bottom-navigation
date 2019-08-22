@@ -3,7 +3,6 @@
     package="com.purchease.bottomnavigation">
 
     <application>
-        <activity android:name=".PlopActivity"></activity>
     </application>
 
 </manifest>

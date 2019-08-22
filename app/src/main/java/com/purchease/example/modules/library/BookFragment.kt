@@ -1,7 +1,7 @@
 package com.purchease.example.modules.library
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +9,7 @@ import com.purchease.example.R
 import kotlinx.android.synthetic.main.fragment_book.*
 
 
-class BookFragment : Fragment() {
+class BookFragment : androidx.fragment.app.Fragment() {
 
     private lateinit var bookTitle: String
     private lateinit var bookPublishDate: String

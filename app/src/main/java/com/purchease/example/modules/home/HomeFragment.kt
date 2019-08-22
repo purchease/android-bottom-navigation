@@ -2,14 +2,13 @@ package com.purchease.example.modules.home
 
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.widget.Toolbar
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.Toolbar
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-
 import com.purchease.example.R
 import com.purchease.example.shared.utility.HandleNotifications
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -36,7 +35,7 @@ class HomeFragment : Fragment() {
         btn_notify.setOnClickListener { HandleNotifications.showNotification(requireContext()) }
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val destination = when (item?.itemId) {
             R.id.search -> R.id.action_search
             else -> null

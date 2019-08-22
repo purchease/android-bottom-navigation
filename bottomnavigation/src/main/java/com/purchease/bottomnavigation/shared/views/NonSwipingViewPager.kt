@@ -1,14 +1,14 @@
 package com.purchease.bottomnavigation.shared.views
 
 import android.content.Context
-import android.support.v4.view.ViewPager
+import androidx.viewpager.widget.ViewPager
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.animation.DecelerateInterpolator
 import android.widget.Scroller
 
 
-class NonSwipingViewPager : ViewPager {
+class NonSwipingViewPager : androidx.viewpager.widget.ViewPager {
 
     constructor(context: Context) : super(context) {
         setMyScroller()
@@ -30,7 +30,7 @@ class NonSwipingViewPager : ViewPager {
 
     private fun setMyScroller() {
         try {
-            val viewpager = ViewPager::class.java
+            val viewpager = androidx.viewpager.widget.ViewPager::class.java
             val scroller = viewpager.getDeclaredField("mScroller")
             scroller.isAccessible = true
             scroller.set(this, MyScroller(context))
