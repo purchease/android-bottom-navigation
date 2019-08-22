@@ -19,6 +19,8 @@ class BaseFragment : Fragment() {
     private var layoutRes: Int = -1
     private var toolbarId: Int = -1
     private var navHostId: Int = -1
+    private var navGraphId: Int = -1
+    private var bundle: Bundle? = null
     private var appBarConfig: AppBarConfiguration? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,14 +29,23 @@ class BaseFragment : Fragment() {
             layoutRes = it.getInt(KEY_LAYOUT)
             toolbarId = it.getInt(KEY_TOOLBAR)
             navHostId = it.getInt(KEY_NAV_HOST)
-
-        } ?: return
+            navGraphId = it.getInt(KEY_NAV_GRAPH)
+            bundle = it.getBundle(KEY_BUNDLE)
+        }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         return if (layoutRes == defaultInt) null
         else inflater.inflate(layoutRes, container, false)
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        val navController = requireActivity().findNavController(navHostId)
+        val navInflater = navController.navInflater
+        val graph = navInflater.inflate(navGraphId)
+        navController.setGraph(graph, bundle)
     }
 
     override fun onStart() {
@@ -72,12 +83,16 @@ class BaseFragment : Fragment() {
         private const val KEY_LAYOUT = "layout_key"
         private const val KEY_TOOLBAR = "toolbar_key"
         private const val KEY_NAV_HOST = "nav_host_key"
+        private const val KEY_NAV_GRAPH = "nav_graph_key"
+        private const val KEY_BUNDLE = "bundle_key"
 
-        fun newInstance(layoutRes: Int, navHostId: Int, toolbarId: Int = -1) = BaseFragment().apply {
+        fun newInstance(layoutRes: Int, navHostId: Int, navGraphId: Int, bundle: Bundle? = null, toolbarId: Int = -1) = BaseFragment().apply {
             arguments = Bundle().apply {
                 putInt(KEY_LAYOUT, layoutRes)
                 putInt(KEY_TOOLBAR, toolbarId)
                 putInt(KEY_NAV_HOST, navHostId)
+                putInt(KEY_NAV_GRAPH, navGraphId)
+                putBundle(KEY_BUNDLE, bundle)
             }
         }
     }
